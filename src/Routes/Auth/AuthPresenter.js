@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import Input from "../Components/Input";
-import Button from "../Components/Button";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -46,29 +46,42 @@ const Form = styled(Box)`
   }
 `;
 
-export default () => {
-  const [action, setAction] = useState("logIn");
+export default ({
+  action,
+  username,
+  firstName,
+  lastName,
+  email,
+  setAction,
+  onSubmit,
+  secret
+}) => (
+  <Wrapper>
+    <Form>
+      {action === "logIn" && (
+        <form onSubmit={onSubmit}>
+          <Input placeholder={"Email"} {...email} type="email" />
+          <Button text={"Log in"} />
+        </form>
+      )}
+      {action === "signUp" && (
+        <form onSubmit={onSubmit}>
+          <Input placeholder={"First name"} {...firstName} />
+          <Input placeholder={"Last name"} {...lastName} />
+          <Input placeholder={"Email"} {...email} type="email" />
+          <Input placeholder={"Username"} {...username} />
+          <Button text={"Sign up"} />
+        </form>
+      )}
+      {action === "confirm" && (
+        <form onSubmit={onSubmit}>
+          <Input placeholder="Paste your secret" required {...secret} />
+          <Button text={"Confirm"} />
+        </form>
+      )}
+    </Form>
 
-  return (
-    <Wrapper>
-      <Form>
-        {action === "logIn" ? (
-          <form>
-            <Input placeholder={"Username"} />
-            <Input placeholder={"Password"} />
-            <Button text={"Log in"} />
-          </form>
-        ) : (
-          <form>
-            <Input placeholder={"First name"} />
-            <Input placeholder={"Last name"} />
-            <Input placeholder={"Email"} />
-            <Input placeholder={"Username"} />
-            <Input placeholder={"Password"} />
-            <Button text={"Sign up"} />
-          </form>
-        )}
-      </Form>
+    {action !== "confirm" && (
       <StateChanger>
         {action === "logIn" ? (
           <>
@@ -82,6 +95,6 @@ export default () => {
           </>
         )}
       </StateChanger>
-    </Wrapper>
-  );
-};
+    )}
+  </Wrapper>
+);
