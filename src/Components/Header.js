@@ -67,7 +67,6 @@ const HeaderLink = styled(Link)`
 export default withRouter(({ history }) => {
   const search = useInput("");
   const { data  } = useQuery(ME);
-  console.log(data);
   const onSearchSubmit = e => {
     e.preventDefault();
     history.push(`/search?term=${search.value}`);
@@ -82,7 +81,7 @@ export default withRouter(({ history }) => {
         </HeaderColumn>
         <HeaderColumn>
           <form onSubmit={onSearchSubmit}>
-            <SearchInput {...search} placeholder="Search" />
+            <SearchInput value={search.value} onChange={search.onChange} placeholder="Search" />
           </form>
         </HeaderColumn>
         <HeaderColumn>
